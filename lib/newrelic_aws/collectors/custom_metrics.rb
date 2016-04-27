@@ -16,7 +16,7 @@ module NewRelicAWS
           JSON.parse(custom_metrics).each do |(app_name, metric_name, statistic, unit, namespace, dimension_name, dimension_value)|
             period = 60
             time_offset = 60
-            if dimension.length > 0
+            if dimension_name.length > 0
                 data_point = get_data_point(
                 :namespace   => namespace,
                 :metric_name => metric_name,
