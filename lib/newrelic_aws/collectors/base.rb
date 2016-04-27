@@ -21,7 +21,7 @@ module NewRelicAWS
         options[:period]     ||= 60
         options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay + options[:period])).iso8601
         options[:end_time]   ||= (Time.now.utc - @cloudwatch_delay).iso8601
-        unless options[:dimension].nil?
+        unless [options[:dimension]].nil?
             options[:dimensions] ||= [options[:dimension]]
         end
         NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect)
