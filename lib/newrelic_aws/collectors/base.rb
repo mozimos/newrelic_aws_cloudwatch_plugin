@@ -21,19 +21,31 @@ module NewRelicAWS
         options[:period]     ||= 60
         options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay + options[:period])).iso8601
         options[:end_time]   ||= (Time.now.utc - @cloudwatch_delay).iso8601
-        options[:dimensions] ||= [options[:dimension]]
         NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect)
         begin
-          statistics = @cloudwatch.client.get_metric_statistics(
-            :namespace   => options[:namespace],
-            :metric_name => options[:metric_name],
-            :unit        => options[:unit],
-            :statistics  => [options[:statistic]],
-            :period      => options[:period],
-            :start_time  => options[:start_time],
-            :end_time    => options[:end_time],
-            :dimensions  => options[:dimensions]
-          )
+            if options[:dimensions].nil?
+                statistics = @cloudwatch.client.get_metric_statistics(
+                    :namespace   => options[:namespace],
+                    :metric_name => options[:metric_name],
+                    :unit        => options[:unit],
+                    :statistics  => [options[:statistic]],
+                    :period      => options[:period],
+                    :start_time  => options[:start_time],
+                    :end_time    => options[:end_time]
+                )
+            else
+                options[:dimensions] ||= [options[:dimension]]
+                statistics = @cloudwatch.client.get_metric_statistics(
+                    :namespace   => options[:namespace],
+                    :metric_name => options[:metric_name],
+                    :unit        => options[:unit],
+                    :statistics  => [options[:statistic]],
+                    :period      => options[:period],
+                    :start_time  => options[:start_time],
+                    :end_time    => options[:end_time],
+                    :dimensions  => options[:dimensions]
+                )
+            end
         rescue => error
           NewRelic::PlatformLogger.error("Unexpected error: " + error.message)
           NewRelic::PlatformLogger.debug("Backtrace: " + error.backtrace.join("\n "))
