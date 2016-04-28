@@ -207,16 +207,16 @@ module NewRelicAWS
   #
   # Register each agent with the component.
   #
-  ##NewRelic::Plugin::Setup.install_agent :ec2, EC2 if NewRelicAWS::agent_enabled?(:ec2)
-  ##NewRelic::Plugin::Setup.install_agent :ebs, EBS if NewRelicAWS::agent_enabled?(:ebs)
-  ##NewRelic::Plugin::Setup.install_agent :elb, ELB if NewRelicAWS::agent_enabled?(:elb)
-  ##NewRelic::Plugin::Setup.install_agent :rds, RDS if NewRelicAWS::agent_enabled?(:rds)
+  NewRelic::Plugin::Setup.install_agent :ec2, EC2 if NewRelicAWS::agent_enabled?(:ec2)
+  NewRelic::Plugin::Setup.install_agent :ebs, EBS if NewRelicAWS::agent_enabled?(:ebs)
+  NewRelic::Plugin::Setup.install_agent :elb, ELB if NewRelicAWS::agent_enabled?(:elb)
+  NewRelic::Plugin::Setup.install_agent :rds, RDS if NewRelicAWS::agent_enabled?(:rds)
   NewRelic::Plugin::Setup.install_agent :custom_metrics, CUSTOM_METRICS if NewRelicAWS::agent_enabled?(:custom_metrics)
   # NewRelic::Plugin::Setup.install_agent :ddb, DDB # WIP
-  ##NewRelic::Plugin::Setup.install_agent :sqs, SQS if NewRelicAWS::agent_enabled?(:sqs)
-  ##NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
-  ##NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
-  ##NewRelic::Plugin::Setup.install_agent :ecr, ECR if NewRelicAWS::agent_enabled?(:ecr)
+  NewRelic::Plugin::Setup.install_agent :sqs, SQS if NewRelicAWS::agent_enabled?(:sqs)
+  NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
+  NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
+  NewRelic::Plugin::Setup.install_agent :ecr, ECR if NewRelicAWS::agent_enabled?(:ecr)
 
   #
   # Launch the agents; this never returns.
