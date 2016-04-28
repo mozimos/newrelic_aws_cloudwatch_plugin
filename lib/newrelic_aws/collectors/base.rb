@@ -30,7 +30,6 @@ module NewRelicAWS
                 statistics = @cloudwatch.client.get_metric_statistics(
                     :namespace   => options[:namespace],
                     :metric_name => options[:metric_name],
-                    :unit        => options[:unit],
                     :statistics  => [options[:statistic]],
                     :period      => options[:period],
                     :start_time  => options[:start_time],
@@ -60,7 +59,11 @@ module NewRelicAWS
         return if value.nil?
 
         component_name = get_component_name(options)
-        [component_name, options[:metric_name], options[:unit].downcase, value]
+        if options[:unit].nil? == false
+            [component_name, options[:metric_name], options[:unit].downcase, value]
+        else
+            [component_name, options[:metric_name], "none", value]
+        end
       end
 
       def collect
@@ -92,7 +95,9 @@ module NewRelicAWS
 
       def get_component_name(options)
         component_name   = options[:component_name]
-        component_name ||= options[:dimensions].map { |dimension| dimension[:value] }.join("/")
+        unless options[:dimensions].nil?
+            component_name ||= options[:dimensions].map { |dimension| dimension[:value] }.join("/")
+        end
         component_name
       end
     end
